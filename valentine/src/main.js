@@ -25,6 +25,11 @@ app.innerHTML = `
     <span class="heart heart-3">♥</span>
     <span class="heart heart-4">♥</span>
     <span class="heart heart-5">♥</span>
+    <span class="heart heart-6">♥</span>
+    <span class="heart heart-7">♥</span>
+    <span class="heart heart-8">♥</span>
+    <span class="heart heart-9">♥</span>
+    <span class="heart heart-10">♥</span>
   </div>
   <main class="page">
     <div class="card" id="card">

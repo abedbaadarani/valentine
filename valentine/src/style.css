@@ -1,0 +1,331 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Valentine gradient */
+  --bg-start: #ffeef2;
+  --bg-end: #ffd6e0;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-shadow: 0 8px 32px rgba(190, 100, 120, 0.2);
+  --accent: #e91e63;
+  --accent-soft: #f8bbd9;
+  --text: #5d2d3d;
+  --text-soft: #7d4a5c;
+  --focus-ring: 0 0 0 3px rgba(233, 30, 99, 0.5);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-width: 320px;
+  color: var(--text);
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 50%, #ffe0e8 100%);
+  background-attachment: fixed;
+}
+
+/* Optional hearts pattern overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e91e63' opacity='0.06'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Floating hearts (lightweight) */
+.floating-hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.floating-hearts .heart {
+  position: absolute;
+  font-size: 1.25rem;
+  opacity: 0.2;
+  color: var(--accent);
+}
+
+.floating-hearts .heart-1 { left: 10%; top: 20%; animation: float-heart 18s ease-in-out infinite; }
+.floating-hearts .heart-2 { left: 25%; top: 70%; animation: float-heart 22s ease-in-out infinite 2s; }
+.floating-hearts .heart-3 { left: 60%; top: 15%; animation: float-heart 20s ease-in-out infinite 4s; }
+.floating-hearts .heart-4 { left: 80%; top: 60%; animation: float-heart 24s ease-in-out infinite 1s; }
+.floating-hearts .heart-5 { left: 45%; top: 85%; animation: float-heart 19s ease-in-out infinite 3s; }
+
+@keyframes float-heart {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  25% { transform: translate(8px, -12px) scale(1.05); opacity: 0.28; }
+  50% { transform: translate(-5px, -20px) scale(0.98); opacity: 0.22; }
+  75% { transform: translate(10px, -8px) scale(1.02); opacity: 0.26; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-hearts .heart {
+    animation: none;
+    opacity: 0.15;
+  }
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.page-footer {
+  font-size: 0.8125rem;
+  color: var(--text-soft);
+  opacity: 0.8;
+  margin: 0;
+}
+
+.card {
+  max-width: 28rem;
+  width: 100%;
+  padding: 2rem 1.75rem;
+  background: var(--card-bg);
+  border-radius: 24px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+
+.card-title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.card-subtitle {
+  margin: 0 0 1.75rem;
+  font-size: 1rem;
+  color: var(--text-soft);
+}
+
+.card-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.btn-no-placeholder {
+  min-height: 48px;
+  min-width: 120px;
+  padding: 0.875rem 1.75rem;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .btn-no-placeholder {
+    min-height: 52px;
+    min-width: 44%;
+  }
+}
+
+.btn {
+  min-height: 48px;
+  min-width: 120px;
+  padding: 0.875rem 1.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-yes {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 4px 14px rgba(233, 30, 99, 0.4);
+}
+
+.btn-yes:hover {
+  box-shadow: 0 6px 22px rgba(233, 30, 99, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-yes:active {
+  transform: scale(0.98) translateY(0);
+}
+
+.btn-no {
+  background: var(--card-bg);
+  color: var(--text-soft);
+  border: 2px solid var(--accent-soft);
+}
+
+.btn-no:hover {
+  background: rgba(248, 187, 217, 0.35);
+  color: var(--text);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.btn-no:active {
+  transform: scale(0.98) translateY(0);
+}
+
+.celebration-message {
+  margin: 0.5rem 0 0;
+  font-size: 1.125rem;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+
+/* Runaway No button: positioned in viewport, smooth slide */
+.btn-no-runaway {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: left 0.35s ease-out, top 0.35s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn-no-runaway {
+    transition: none;
+  }
+}
+
+/* Mobile: larger tap targets, iPhone-friendly */
+@media (max-width: 480px) {
+  #app {
+    padding: 0.75rem;
+  }
+
+  .card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .btn {
+    min-height: 52px;
+    min-width: 44%;
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+  }
+
+  .card-buttons {
+    gap: 0.625rem;
+  }
+}
+
+@media (max-width: 390px) {
+  #app {
+    padding: 0.5rem;
+  }
+
+  .card {
+    padding: 1.25rem 1rem;
+    border-radius: 16px;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .btn {
+    min-width: 42%;
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  .btn-no-placeholder {
+    min-width: 42%;
+  }
+}
+
+/* Fireworks canvas overlay */
+.fireworks-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-start: #2d1b24;
+    --bg-end: #1a0f14;
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --text: #fce4ec;
+    --text-soft: #f8bbd9;
+    --accent-soft: rgba(248, 187, 217, 0.25);
+  }
+
+  body::before {
+    opacity: 0.12;
+  }
+
+  .btn-no {
+    border-color: var(--accent-soft);
+  }
+
+  .btn-no:hover {
+    background: var(--accent-soft);
+  }
+
+  .btn:focus-visible {
+    --focus-ring: 0 0 0 3px rgba(248, 187, 217, 0.6);
+  }
+
+  .celebration-message {
+    color: var(--text-soft);
+  }
+}
